@@ -32,13 +32,13 @@
                 </el-menu-item>
             </router-link>
 
-            <router-link  to="/event/eventList"  v-if="routes['/event/eventList']" >
-                <el-menu-item index="/event/eventList">
+            <router-link  to="/comment/commentList"  v-if="routes['/comment/commentList']" >
+                <el-menu-item index="/comment/commentList">
                     <i class="fa fa-table" aria-hidden="true"></i> 评论管理
                 </el-menu-item>
             </router-link>
-              <router-link  to="/event/eventList"  v-if="routes['/event/eventList']" >
-                <el-menu-item index="/event/eventList">
+              <router-link  to="/news/newsList"  v-if="routes['/news/newsList']" >
+                <el-menu-item index="/news/newsList">
                     <i class="fa fa-table" aria-hidden="true"></i> 消息管理
                 </el-menu-item>
             </router-link>

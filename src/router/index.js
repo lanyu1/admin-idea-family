@@ -32,6 +32,17 @@ const TableList = _import('example/tableList');
 const EventList = _import('event/eventList');
 const EventSearch = _import('event/eventSearch');
 
+// 评论管理
+const CommentList = _import('comment/commentList');
+
+// 消息管理
+const NewsList = _import('news/newsList');
+
+/* 小组管理*/
+const TeamList = _import('team/teamList');
+const TeamUpdate = _import('team/teamUpdate');
+
+
 
 const Form = _import('example/form');
 const Tinymce = _import('example/tinymce');
@@ -39,10 +50,6 @@ const Mixin = _import('example/mixin');
 
 /* 系统管理*/
 const PermissionsManage = _import('systemSet/permissionsManage');
-/* 小组管理*/
-const TeamList = _import('team/teamList');
-const TeamUpdate = _import('team/teamUpdate');
-
 Vue.use(Router);
 
  /**
@@ -130,7 +137,26 @@ const constantRouterMap = [
       { path: 'teamUpdate', component: TeamUpdate, name: '小组修改' },
     ]
   },
-  
+  {
+    path: '/comment',
+    component: Layout,
+    redirect: 'noredirect',
+    name: '评论管理',
+    // icon: '404',
+    children: [
+      { path: 'commentList', component: CommentList, name: '评论列表' },
+    ]
+  },
+  {
+    path: '/news',
+    component: Layout,
+    redirect: 'noredirect',
+    name: '评论管理',
+    // icon: '404',
+    children: [
+      { path: 'newsList', component: NewsList, name: '消息列表' },
+    ]
+  },
   {
     path: '/example',
     component: Layout,

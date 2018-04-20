@@ -22,8 +22,8 @@ let nodeApiBaseUrl = 'http://localhost:3000';
 export const api = {
 
             //'login':'http://localhost:80/dataJson/login.json',//ngxin
-            'login':url.staticPath+'/dataJson/login.json',//登录模拟接口，正式环境请删除
-            'getUserInfo':url.staticPath+'/dataJson/userInfo.json',//获取登录用户模拟接口
+            'login':url.staticPath+'/dataJson/login.json',//登录接口
+            'getUserInfo':url.staticPath+'/dataJson/userInfo.json',//获取登录用户接口
             'tableList':url.staticPath+'/dataJson/tableList.json',//表格模拟接口
             'getForm':url.staticPath+'/dataJson/form.json',//表单模拟接口
             "roleAndUser":url.staticPath+"/dataJson/roleAndUser.json",  //获取角色和对应用户  
