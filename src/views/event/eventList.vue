@@ -65,7 +65,7 @@
                   <span>{{scope.row.instruction}}</span>
                 </template>
             </el-table-column>
-            <el-table-column align="center"  label="支持数"  prpp="createtime">
+            <el-table-column align="center"  label="创建时间"  prpp="createtime">
                 <template scope="scope">
                   <!-- <i class="el-icon-time"></i> -->
                   <span>{{scope.row.createtime}}</span>
@@ -81,29 +81,29 @@
     <!-- 分页 -->
     <div v-show="!listLoading" class="pagination-container">
       <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listQuery.currPage"
-        :page-sizes="[10,20,30, 50]" :page-size="listQuery.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
+        :page-sizes="[5,10,15,20]" :page-size="listQuery.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
       </el-pagination>
     </div>
     <!-- 新增弹窗 -->
-    <el-dialog title="表单新增" :visible.sync="dialogFormVisible">
+    <el-dialog title="新增创意" :visible.sync="dialogFormVisible">
           <el-form class="small-space" :model="temp" label-position="left" label-width="70px" style='width: 400px; margin-left:50px;'>
          
            
 
-            <el-form-item label="字段1">
-              <el-input v-model="temp.chnlId"></el-input>
+            <el-form-item label="标题">
+              <el-input v-model="temp.title"></el-input>
             </el-form-item>
 
-            <el-form-item label="字段2">
-              <el-input v-model="temp.hisChnlId"></el-input>
+            <el-form-item label="类型">
+              <el-input v-model="temp.typecontent"></el-input>
             </el-form-item>
 
-            <el-form-item label="字段3">
-              <el-input v-model="temp.chnlName"></el-input>
+            <el-form-item label="描述">
+              <el-input v-model="temp.instruction"></el-input>
             </el-form-item>
 
-            <el-form-item label="字段4">
-              <el-input v-model="temp.state"></el-input>
+            <el-form-item label="创建时间">
+              <el-input v-model="temp.createtime"></el-input>
             </el-form-item>
 
            
@@ -146,12 +146,13 @@ export default {
           "chnlName": "",
           "state": "",
           "isavailable": "",
-          "orderNum": 10
+          "orderNum": 5
         },
         typeOptions:[
-          { key: '001', display_name: '类型1' },
-          { key: '002', display_name: '类型2' },
-          { key: '003', display_name: '类型3' }
+          { key: '001', display_name: '民宿' },
+          { key: '002', display_name: '餐饮' },
+          { key: '003', display_name: '农业' },
+           { key: '003', display_name: '休闲' }
          
         ],
         dialogFormVisible: false,

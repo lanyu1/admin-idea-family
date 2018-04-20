@@ -19,7 +19,7 @@
                     登录
                 </el-button>
             </el-form-item>
-            <div class='tips'>测试帐号为:81438234@qq.com 密码：123456</div>
+            <div class='tips'>测试帐号为:1563274504@qq.com 密码：123456</div>
             
             <router-link to="/sendpwd" class="forget-pwd">
                 忘记密码?(或首次登录)
@@ -48,7 +48,7 @@
           }
         };
         const validateAccount = (rule, value, callback) => {
-        if (value !== '81438234@qq.com') {
+        if (value !== '1563274504@qq.com') {
               callback(new Error('帐号不存在！'));
             } else {
               callback();
@@ -71,7 +71,7 @@
 
         return {
             loginForm: {
-                email: '81438234@qq.com',
+                email: '1563274504@qq.com',
                 password: ''
             },
             loginRules: {
