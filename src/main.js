@@ -20,8 +20,12 @@ import errLog from 'store/errLog';// error log组件
 
 import {global} from 'src/global/global';
 import Cookies from 'js-cookie';
-
-
+import VueLazyload from 'vue-lazyload'
+//引入图片懒加载
+Vue.use(VueLazyload, {
+    loading: 'static/loading-svg/loading-bars.svg',
+    try: 3 // default 1
+  })
 // register globally
 // Vue.component('multiselect', Multiselect);
 // Vue.component('Sticky', Sticky);
