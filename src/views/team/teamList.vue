@@ -33,73 +33,48 @@
             </template>
           </el-table-column>
 
-          <el-table-column label="学生姓名" width="">
+          <el-table-column label="小组名" width="">
             <template scope="scope">
-              {{scope.row.studentName}}
+              {{scope.row.teamname}}
             </template>
           </el-table-column>
 
-          <el-table-column label="性别" width="">
+          <el-table-column label="创建者" width="">
             <template scope="scope">
-              <span v-if="scope.row.sex == 'man'">男</span>
-              <span v-else>女</span>
+              {{scope.row.users.nikeName}}
             </template>
           </el-table-column>
 
-          <el-table-column label="民族"  align="center" width="">
+          <el-table-column label="小组头像"  align="center" width="">
             <template scope="scope">
-              <span v-if="scope.row.minzu == '10010' ">汉族</span>
-              <span v-if="scope.row.minzu == '10011' ">壮族</span>
-              <span v-if="scope.row.minzu == '10012' ">奶佬族</span>
-              
+              <img v-lazy="'/static/image/'+scope.row.photoname" style="width:80px;height:50px;">        
             </template>
           </el-table-column>
 
-          <el-table-column align="center" prop="created_at" label="二级学院" width="">
+          <el-table-column align="center" prop="created_at" label="公告" width="">
             <template scope="scope">
-              <span v-if="scope.row.xueyuan == '40010' ">文学院</span>
-              <span v-if="scope.row.xueyuan == '40011' ">外国语学院</span>
-              <span v-if="scope.row.xueyuan == '40013' ">法学院</span>
-
-              
+              {{scope.row.notice}} 
             </template>
           </el-table-column>
 
-            <el-table-column align="center"  label="入校时间" >
+            <el-table-column align="center"  label="创建时间" >
                 <template scope="scope">
-                  <!-- <i class="el-icon-time"></i> -->
-                  <span>{{scope.row.ruxiaodate}}</span>
+                   <i class="el-icon-time"></i>
+                  <span>{{scope.row.createtime}}</span>
                 </template>
             </el-table-column>
 
-            <el-table-column align="center"  label="家庭住址" >
+            <el-table-column align="center"  label="描述" >
                 <template scope="scope">
                   <!-- <i class="el-icon-time"></i> -->
-                  <span>{{scope.row.address}}</span>
-                </template>
-            </el-table-column>
-             <el-table-column align="center"  label="是否全日制" >
-                <template scope="scope">
-                  <!-- <i class="el-icon-time"></i> -->
-                  <span v-if="scope.row.quanrizhi">是</span>
-                  <span v-else>否</span>
-
-                </template>
-            </el-table-column>
-
-            <el-table-column align="center"  label="操作" >
-                <template scope="scope">
-                    
-                   <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                   <el-button size="small" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-                         
+                  <span>{{scope.row.description}}</span>
                 </template>
             </el-table-column>
     </el-table>
     <!-- 分页 -->
     <div v-show="!listLoading" class="pagination-container">
       <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listQuery.currPage"
-        :page-sizes="[10,20,30, 50]" :page-size="listQuery.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
+        :page-sizes="[5,10,15,20]" :page-size="listQuery.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
       </el-pagination>
     </div>
     <!-- 新增弹窗 -->
@@ -141,6 +116,7 @@
 // import { getList } from 'api/article';
 import {global} from 'src/global/global';
 import {api} from 'src/global/api';
+import axios from 'axios';
 
 export default {
   data() {
