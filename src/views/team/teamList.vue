@@ -1,12 +1,8 @@
 <template>
   <div class="app-container">
-    <h2 style="color:red">
-        注意：此页面使用了本地api接口，若想正常运行，请下载另外一个node项目（https://github.com/lss5270/vue-admin-spa-api），并且在本地启动该node项目。
-    </h2>
-    
     <!-- 搜索条件 -->
     <div class="filter-container">
-      <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" placeholder="学生姓名" v-model="listQuery.studentName">
+      <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" placeholder="搜索列表" v-model="listQuery.studentName">
       </el-input>
 
      

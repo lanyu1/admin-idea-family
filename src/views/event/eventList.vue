@@ -14,7 +14,7 @@
       <el-button class="filter-item" type="primary" @click="clickEditButton"  icon="edit">编辑创意</el-button>
 
       <el-button class="filter-item" type="primary" @click="handleDelete"  icon="edit">删除创意</el-button>
-      <el-button class="filter-item" type="primary" icon="document" @click="handleDownload">导出</el-button>
+      <!-- <el-button class="filter-item" type="primary" icon="document" @click="handleDownload">导出</el-button> -->
      
     </div>
 
@@ -150,6 +150,18 @@
                   <el-option label="休闲" value="休闲"></el-option>
                 </el-select>
       </el-form-item>
+      <el-form-item label="图片" required>
+      <el-upload
+        class="upload-demo"
+        action="http://localhost:9090/upload/img"
+        :on-preview="handlePreview"
+        :on-success="successHandle"
+        :on-remove="handleRemove"
+        :file-list="fileList"
+        list-type="picture" style="width: 95%;">
+      <el-button size="small" type="primary">修改图片</el-button>
+</el-upload>
+      </el-form-item>
             <el-form-item label="创意描述" required>
                <el-input type="textarea" v-model="temp.instruction"  style="width: 95%;"></el-input>
             </el-form-item>
@@ -261,13 +273,17 @@ export default {
       console.log(this.multipleSelection);
       if(this.multipleSelection.length==1){
          this.dialogFormEdit = true;
-  ;
+         this.fileList=[{
+           name:this.multipleSelection[0].photoname,
+           url:'localhost:2018/'
+         }]
+
          vm.temp.typecontent = this.multipleSelection[0].eventType.typecontent;
          //vm.temp.type = this.multipleSelection[0].type;
          vm.temp.founderid = this.multipleSelection[0].founderid;
          vm.temp.title = this.multipleSelection[0].title;
          vm.temp.city = this.multipleSelection[0].city;
-         vm.temp.createtime = this.multipleSelection[0].createtime+1;
+         vm.temp.createtime = this.multipleSelection[0].createtime;
          vm.temp.instruction = this.multipleSelection[0].instruction;
          vm.temp.id = this.multipleSelection[0].id;
       }else if(this.multipleSelection.length>1){
@@ -293,6 +309,7 @@ export default {
           founderid:vm.temp.founderid,
           title:vm.temp.title,
           city:vm.temp.city,
+          photoname:this.fileName,
           createtime:vm.temp.createtime,
           instruction:vm.temp.instruction
         },{
@@ -315,7 +332,6 @@ export default {
     //删除创意信息
     handleDelete(){
         let vm = this;
-        console.log('删除选择的row：',vm.multipleSelection);
       if(this.multipleSelection.length==1){
         var param={
           eid :vm.multipleSelection[0].id
@@ -327,7 +343,6 @@ export default {
                message:"删除成功"
         });
           this.getList();
-         console.log(res);
       });
 
       }else if(this.multipleSelection.length>1){
@@ -422,18 +437,18 @@ export default {
         this.multipleSelection = val;
     },
 
-    handleDownload() {
-      let vm = this;
+    // handleDownload() {
+    //   let vm = this;
 
-      require.ensure([], () => {
-        const { export_json_to_excel } = require('vendor/Export2Excel');
-        const tHeader = ['字段1', '字段2', '字段3', '字段4', '字段5'];
-        const filterVal = ['chnlId', 'hisChnlId', 'chnlName', 'state', 'isavailable'];
-        const list = vm.list;
-        const data = vm.formatJson(filterVal, list);
-        export_json_to_excel(tHeader, data, '导出的列表excel');
-      })
-    },
+    //   require.ensure([], () => {
+    //     const { export_json_to_excel } = require('vendor/Export2Excel');
+    //     const tHeader = ['字段1', '字段2', '字段3', '字段4', '字段5'];
+    //     const filterVal = ['chnlId', 'hisChnlId', 'chnlName', 'state', 'isavailable'];
+    //     const list = vm.list;
+    //     const data = vm.formatJson(filterVal, list);
+    //     export_json_to_excel(tHeader, data, '导出的列表excel');
+    //   })
+    // },
     formatJson(filterVal, jsonData) {
       return jsonData.map(v => filterVal.map(j => v[j]))
     }
