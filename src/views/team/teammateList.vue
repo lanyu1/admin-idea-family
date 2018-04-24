@@ -13,17 +13,16 @@
       </el-select> -->
 
         <el-button class="filter-item" type="primary" v-waves icon="search" @click="handleFilter">搜索</el-button>
-      <el-button class="filter-item" type="primary" @click="handleCreate"  icon="plus">新增小组</el-button>
-      <el-button class="filter-item" type="primary" @click="clickEditButton"  icon="edit">编辑小组</el-button>
-
-      <el-button class="filter-item" type="primary" @click="handleDelete"  icon="delete">删除小组</el-button>
+      <el-button class="filter-item" type="primary" @click="handleCreate"  icon="plus">新增组员</el-button>
+      <!-- <el-button class="filter-item" type="primary" @click="clickEditButton"  icon="edit">编辑组员信息</el-button> -->
+      <el-button class="filter-item" type="primary" @click="handleDelete"  icon="delete">删除该组员</el-button>
      
     </div>
 
     
    
     <!-- 表格 -->
-    <el-table ref="multipleTable" @selection-change="handleSelectionChange" :data="teamList" v-loading.body="listLoading" element-loading-text="拼命加载中" border fit highlight-current-row  >
+    <el-table ref="multipleTable" @selection-change="handleSelectionChange" :data="teammateList" v-loading.body="listLoading" element-loading-text="拼命加载中" border fit highlight-current-row  >
          <el-table-column type="selection" width="65">
          </el-table-column>
 
@@ -34,40 +33,30 @@
           </el-table-column>
 
           <el-table-column label="小组名" width="" align="center" >
-            <template scope="scope">
-              {{scope.row.teamname}}
+            <template scope="scope" >
+              {{scope.row.teamName}}
             </template>
           </el-table-column>
 
           <el-table-column label="创建者" width="" align="center" >
             <template scope="scope">
-              {{scope.row.users.nikeName}}
+              {{scope.row.founderName}}
             </template>
           </el-table-column>
-
-          <el-table-column label="小组头像"  align="center" width="" >
+          <el-table-column label="角色"  align="center" width="">
+            <template scope="scope" prop="authority" :formatter="formatLevel(scope.row.authority)">
+              {{formatLevel(scope.row.authority)}}      
+            </template>
+          </el-table-column>
+          <el-table-column label="职责" width="" align="center" >
             <template scope="scope">
-              <img v-lazy="'/static/image/'+scope.row.photoname" style="width:80px;height:50px;">        
+              {{scope.row.duty}}
             </template>
           </el-table-column>
-
-          <el-table-column align="center" prop="created_at" label="公告" width="">
-            <template scope="scope">
-              {{scope.row.notice}} 
-            </template>
-          </el-table-column>
-
-            <el-table-column align="center"  label="创建时间" >
-                <template scope="scope">
-                   <i class="el-icon-time"></i>
-                  <span>{{scope.row.createtime}}</span>
-                </template>
-            </el-table-column>
-
-            <el-table-column align="center"  label="描述" >
+            <el-table-column align="center"  label="组员名称" >
                 <template scope="scope">
                   <!-- <i class="el-icon-time"></i> -->
-                  <span>{{scope.row.description}}</span>
+                  <span>{{scope.row.nikeName}}</span>
                 </template>
             </el-table-column>
     </el-table>
@@ -81,39 +70,25 @@
     <el-dialog title="新增小组" :visible.sync="dialogFormAddTeam">
           <el-form class="small-space" :model="temp" label-position="left" label-width="80px" style='width: 400px; margin-left:50px;'>
             <el-form-item label="小组名称" required>
-              <el-input v-model="temp.teamname" style="width: 95%;"></el-input>
+              <el-input v-model="temp.teamName" style="width: 95%;"></el-input>
             </el-form-item>
-         <el-form-item label="小组组长" style="width: 100%;" required>
-                <el-select v-model="temp.founderid" placeholder="请选择组长"  style="width: 95%;">
-                  <el-option  v-for="item in usernameList" :key="item.id" :label="item.nikeName" :value="item.id"></el-option>
+            <el-form-item label="创建者" required>
+              <el-input v-model="temp.founderName" style="width: 95%;"></el-input>
+            </el-form-item>
+            <el-form-item label="角色" required>
+                <el-select v-model="temp.authority" prop="authority" placeholder="请选择角色"  style="width: 95%;">
+                  <el-option  v-for="item in groupList" :key="item.authority" :label="item.label" :value="item.authority"></el-option>
                 </el-select>
-        </el-form-item>
-        <el-form-item label="创建时间" required>
-          <el-form-item >
-             <el-date-picker v-model="temp.createtime" type="date" placeholder="请选择日期" style="width: 95%;">
-    </el-date-picker>
-          </el-form-item>
-      </el-form-item>
-      <el-form-item  label="图片上传" required>
-      <el-upload
-        class="upload-demo"
-        action="http://localhost:9090/upload/img"
-        :on-preview="handlePreview"
-        :on-success="successHandle"
-        :on-remove="handleRemove"
-        :file-list="fileList"
-        list-type="picture" style="width: 95%;">
-      <el-button size="small" type="primary">点击上传</el-button>
-</el-upload>
-      </el-form-item>
-        <el-form-item label="公告" required>
-               <el-input type="textarea" v-model="temp.notice"  style="width: 95%;"></el-input>
             </el-form-item>
-            <el-form-item label="小组描述" required>
-               <el-input type="textarea" v-model="temp.description"  style="width: 95%;"></el-input>
+            <el-form-item label="组员名称" required>
+              <el-select v-model="temp.teammateid" placeholder="请选择组员"  style="width: 95%;">
+                  <el-option  v-for="item in usernameList" :key="item.id" :label="item.nikeName" :value="item.id"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="权限" required>
+               <el-input type="textarea" v-model="temp.duty"  style="width: 95%;"></el-input>
             </el-form-item>
           </el-form>
-
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
            
@@ -121,42 +96,28 @@
           </div>
     </el-dialog>
      <!-- 编辑弹窗 -->
-    <el-dialog title="编辑小组" :visible.sync="dialogFormEditTeam">
-          <el-form class="small-space" :model="temp" label-position="left" label-width="80px" style='width: 400px; margin-left:50px;'>
+    <el-dialog title="编辑组员信息" :visible.sync="dialogFormEditTeam">
+            <el-form class="small-space" :model="temp" label-position="left" label-width="80px" style='width: 400px; margin-left:50px;'>
             <el-form-item label="小组名称" required>
-              <el-input v-model="temp.teamname" style="width: 95%;"></el-input>
+              <el-input v-model="temp.teamName" style="width: 95%;"></el-input>
             </el-form-item>
-         <el-form-item label="小组组长" style="width: 100%;" required>
-                <el-select v-model="temp.founderid" placeholder="请选择组长"  style="width: 95%;">
-                  <el-option  v-for="item in usernameList" :key="item.id" :label="item.nikeName" :value="item.id"></el-option>
+            <el-form-item label="创建者" required>
+              <el-input v-model="temp.founderName" style="width: 95%;"></el-input>
+            </el-form-item>
+            <el-form-item label="角色" required>
+                <el-select v-model="temp.authority" prop="authority" placeholder="请选择角色"  style="width: 95%;">
+                  <el-option  v-for="item in groupList" :key="item.id" :label="item.label" :value="item.id"></el-option>
                 </el-select>
-        </el-form-item>
-        <el-form-item label="创建时间" required>
-          <el-form-item >
-             <el-date-picker v-model="temp.createtime" type="date" placeholder="请选择日期" style="width: 95%;">
-    </el-date-picker>
-          </el-form-item>
-      </el-form-item>
-      <el-form-item  label="图片上传" required>
-      <el-upload
-        class="upload-demo"
-        action="http://localhost:9090/upload/img"
-        :on-preview="handlePreview"
-        :on-success="successHandle"
-        :on-remove="handleRemove"
-        :file-list="fileList"
-        list-type="picture" style="width: 95%;">
-      <el-button size="small" type="primary">点击上传</el-button>
-</el-upload>
-      </el-form-item>
-        <el-form-item label="公告" required>
-               <el-input type="textarea" v-model="temp.notice"  style="width: 95%;"></el-input>
             </el-form-item>
-            <el-form-item label="小组描述" required>
-               <el-input type="textarea" v-model="temp.description"  style="width: 95%;"></el-input>
+            <el-form-item label="组员名称" required>
+              <el-select v-model="temp.teammateid" placeholder="请选择组员"  style="width: 95%;">
+                  <el-option  v-for="item in usernameList" :key="item.id" :label="item.nikeName" :value="item.id"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="权限" required>
+               <el-input type="textarea" v-model="temp.duty"  style="width: 95%;"></el-input>
             </el-form-item>
           </el-form>
-
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
            
@@ -178,8 +139,7 @@ export default {
         // list: null,
         // listLoading: true,
         usernameList:[],
-        teamList:[],
-        fileList:[],
+        teammateList:[],
         list: null,//表格list [].push({})
         total: null,
         listLoading: true,
@@ -189,14 +149,22 @@ export default {
             searchContent:'',
                
         },
+        groupList:[{
+           label: '组员',
+           authority: '0'
+        },
+        {
+           label: '组长',
+           authority: '1'
+        }],
          temp:{
-         "id":"",
-         "founderid":"",
-          "teamname": "",
-          "createtime": "",
-          "notice": "",
-           "photoname":"",
-          "description": "",
+          "tid":"",
+          "teamid":"",
+          "founderName":"",
+          "teamName": "",
+          "authority": "",
+          "duty":"",
+          "teammateid": "",
           "orderNum": 10
       },
         typeOptions:[
@@ -216,24 +184,26 @@ export default {
      
     vm.getList();
     vm.initUserName();
-
   },
   methods: {
+    formatLevel(val){
+      return val===1?'组长':'组员';
+    },
     initTemp(){
       let vm = this;
 
       vm.temp = {
-          "id":"",
-          "founderid":"",
-          "teamname": "",
-          "createtime": "",
-          "notice": "",
-          "photoname":"",
-          "description": "",
+          "tid":"",
+          "teamid":"",
+          "founderName":"",
+          "teamName": "",
+          "authority": "",
+          "duty":"",
+          "teammateid": "",
           "orderNum": 10
       }
     },
-    initUserName(){
+     initUserName(){
       axios.get("http://localhost:9090/user/getUsers").then(result => {
         let res = result.data;
         this.usernameList = res;
@@ -248,10 +218,10 @@ export default {
               "pageSize":vm.listQuery.pageSize,
               "page":vm.listQuery.currPage,
             };
-       axios.get("http://localhost:9090/team/selectTeamListByLike",{params:par}).then(result => {
+       axios.get("http://localhost:9090/teammate/selectTeamList",{params:par}).then(result => {
         let res = result.data;
         console.log(res);
-        this.teamList = res.list;
+        this.teammateList = res.list;
         vm.listLoading=false;
       });
     },
@@ -261,17 +231,13 @@ clickEditButton(){
       let vm = this;
       if(this.multipleSelection.length==1){
         this.dialogFormEditTeam = true;
-         this.fileList=[{
-           name:this.multipleSelection[0].photoname,
-           url:'localhost:2018/'
-         }];
          //vm.temp.type = this.multipleSelection[0].type;
-         vm.temp.founderid = this.multipleSelection[0].founderid;
-         vm.temp.teamname = this.multipleSelection[0].teamname;
-         vm.temp.createtime = this.multipleSelection[0].createtime;
-          vm.temp.notice = this.multipleSelection[0].notice;
-         vm.temp.description = this.multipleSelection[0].description;
-         vm.temp.id = this.multipleSelection[0].id;
+         vm.temp.teamName = this.multipleSelection[0].teamName;
+         vm.temp.founderName = this.multipleSelection[0].founderName;
+         vm.temp.authority =this.formatLevel(this.multipleSelection[0].authority);
+          vm.temp.teammateid = this.multipleSelection[0].teammateid;
+         vm.temp.duty = this.multipleSelection[0].duty;
+         vm.temp.tid = this.multipleSelection[0].tid;
       }else if(this.multipleSelection.length>1){
             vm.$message({
               type:'warning',
@@ -291,14 +257,12 @@ clickEditButton(){
     handleEditSubmit(){
         let vm = this;
         console.log('编辑修改后的数据',vm.temp);
-        axios.put('http://localhost:9090/team/updateTeam',{ 
-          id:vm.temp.id,
-          founderid:vm.temp.founderid,
-          teamname:vm.temp.teamname,
-          notice:vm.temp.notice,
-          photoname:this.fileName,
-          createtime:vm.temp.createtime,
-          description:vm.temp.description
+        axios.put('http://localhost:9090/teammate/updateTeammate',{ 
+          tid:vm.temp.tid,
+          founderName:vm.temp.founderName,
+          teamName:vm.temp.teamName,
+          duty:vm.temp.duty,
+          teammateid:vm.temp.teammateid
         },{
           headers: {
             'Content-Type': 'application/json;charset=UTF-8'
@@ -327,7 +291,7 @@ clickEditButton(){
             cancelButtonText: '取消',
             type: 'warning'
         }).then(() => {
-           axios.delete("http://localhost:9090/team/deleteTeam",{params:param}).then(result =>{
+           axios.delete("http://localhost:9090/teammate/deleteTeammate",{params:param}).then(result =>{
              this.$message({
                 type: 'success',
                 message: '删除成功!'
@@ -368,7 +332,7 @@ clickEditButton(){
               "pageSize":vm.listQuery.pageSize,
               "page":vm.listQuery.currPage,
             };
-         axios.get("http://localhost:9090/team/selectTeamListByLike",{params:par}).then(result => {
+         axios.get("http://localhost:9090/teammate/selectTeamList",{params:par}).then(result => {
         let res = result.data;
         console.log(res);
         this.teamList = res.list;
@@ -386,32 +350,37 @@ clickEditButton(){
       this.listQuery.currPage = val;
       this.getList();
     },
-      //头像上传相关函数
-      handleRemove(file) {
-        console.log(file);
-      },
-      handlePreview(file) {
-        console.log(file);
-      },
-      successHandle(res,file){
-        this.fileName = res;
-        console.log(this.fileName);
-      },
     //新增
     handleCreate() {
+      let vm= this;
         //每次点击新增时 重置下新增表单数据，避免双向绑定的影响
-         this.initTemp();
-
-         this.dialogFormAddTeam = true;
+        if(this.multipleSelection.length==1){
+            this.initTemp();
+            this.dialogFormAddTeam = true;
+             vm.temp.teamName = this.multipleSelection[0].teamName;
+        vm.temp.founderName = this.multipleSelection[0].founderName;
+        }else if(this.multipleSelection.length>1){
+       vm.$message({
+          type:'warning',
+          center:true,
+          message:"选中了多条需要新增的数据，请选择其中一条"
+        });
+      } else{
+        vm.$message({
+          type:'warning',
+          center:true,
+          message:"选择给某个小组添加组员"
+        });
+      }
+         
     },
     //新增提交
     handleCreateSubmit(){
-        console.log(this.fileName);
         let vm = this;
-        vm.temp.photoname=this.fileName;
-        console.log('新增入参：',vm.temp)
+        console.log('新增入参：',vm.temp);
+        vm.temp.teamid = this.multipleSelection[0].teamId;
            //新增接口
-           axios.post('http://localhost:9090/team/addTeam',JSON.stringify(vm.temp),{
+           axios.post('http://localhost:9090/teammate/addTeammate',JSON.stringify(vm.temp),{
            headers: {
                         'Content-Type': 'application/json;charset=UTF-8'
                     }

@@ -27,7 +27,7 @@
                 "/example/31":false,
                 "/systemSet/permissionsManage":true,
                 "/systemSet/loginLog":true,
-                "/teamManage/teamUpdate":true,
+                "/teamManage/teammateList":true,
                 "/teamManage/teamList":true,
                 "/news/newsList":true,
                 "/comment/commentList":true

@@ -40,7 +40,7 @@ const NewsList = _import('news/newsList');
 
 /* 小组管理*/
 const TeamList = _import('team/teamList');
-const TeamUpdate = _import('team/teamUpdate');
+const TeammateList = _import('team/teammateList');
 
 
 
@@ -133,8 +133,8 @@ const constantRouterMap = [
     name: '小组管理',
     // icon: '404',
     children: [
-      { path: 'teamList', component: TeamList, name: '小组列表' },
-      { path: 'teamUpdate', component: TeamUpdate, name: '小组修改' },
+      { path: 'teamList', component: TeamList, name: '小组管理' },
+      { path: 'teammateList', component: TeammateList, name: '组员管理' },
     ]
   },
   {
@@ -151,7 +151,7 @@ const constantRouterMap = [
     path: '/news',
     component: Layout,
     redirect: 'noredirect',
-    name: '评论管理',
+    name: '消息管理',
     // icon: '404',
     children: [
       { path: 'newsList', component: NewsList, name: '消息列表' },

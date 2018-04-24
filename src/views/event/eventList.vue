@@ -10,10 +10,10 @@
       </el-select>
 
       <el-button class="filter-item" type="primary" v-waves icon="search" @click="handleFilter">搜索</el-button>
-      <el-button class="filter-item" type="primary" @click="handleCreate"  icon="edit">新增创意</el-button>
+      <el-button class="filter-item" type="primary" @click="handleCreate"  icon="plus">新增创意</el-button>
       <el-button class="filter-item" type="primary" @click="clickEditButton"  icon="edit">编辑创意</el-button>
 
-      <el-button class="filter-item" type="primary" @click="handleDelete"  icon="edit">删除创意</el-button>
+      <el-button class="filter-item" type="primary" @click="handleDelete"  icon="delete">删除创意</el-button>
       <!-- <el-button class="filter-item" type="primary" icon="document" @click="handleDownload">导出</el-button> -->
      
     </div>
@@ -336,14 +336,24 @@ export default {
         var param={
           eid :vm.multipleSelection[0].id
         }
-        axios.delete("http://localhost:9090/event/deleteEvent",{params:param}).then(result => { 
-          vm.$message({
-                type:'success',
-                center:true,
-               message:"删除成功"
+         this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+        }).then(() => {
+           axios.delete("http://localhost:9090/event/deleteEvent",{params:param}).then(result =>{
+             this.$message({
+                type: 'success',
+                message: '删除成功!'
+              });
+              this.getList();
+      })
+        }).catch(() => {
+            // this.$message({
+            //   type: 'info',
+            //   message: '已取消删除'
+            // });          
         });
-          this.getList();
-      });
 
       }else if(this.multipleSelection.length>1){
        vm.$message({
@@ -429,8 +439,7 @@ export default {
                 center:true,
                message:"添加成功"
         });
-        })
-        , 
+        }); 
         this.dialogFormVisible = false;
     },
     handleSelectionChange(val) {

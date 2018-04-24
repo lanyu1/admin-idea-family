@@ -22,26 +22,42 @@
 
             <router-link  to="/event/eventList"  v-if="routes['/event/eventList']" >
                 <el-menu-item index="/event/eventList">
-                    <i class="fa fa-file-video-o" aria-hidden="true"></i> 创意管理
-            
+                    <i class="fa fa-id-badge" aria-hidden="true"></i> 创意管理
                 </el-menu-item>
             </router-link>
-            <router-link  to="/teamManage/teamList"  v-if="routes['/teamManage/teamList']" >
-                <el-menu-item index="/teamManage/teamList">
-                    <i class="fa fa-file-video-o" aria-hidden="true"></i> 小组管理
-                </el-menu-item>
-            </router-link>
-
             <router-link  to="/comment/commentList"  v-if="routes['/comment/commentList']" >
                 <el-menu-item index="/comment/commentList">
-                    <i class="fa fa-table" aria-hidden="true"></i> 评论管理
+                    <i class="fa fa-comments" aria-hidden="true"></i> 评论管理
                 </el-menu-item>
             </router-link>
               <router-link  to="/news/newsList"  v-if="routes['/news/newsList']" >
                 <el-menu-item index="/news/newsList">
-                    <i class="fa fa-table" aria-hidden="true"></i> 消息管理
+                    <i class="fa fa-comment" aria-hidden="true"></i> 消息管理
                 </el-menu-item>
             </router-link>
+            <!-- <router-link  to="/teamManage/teamList"  v-if="routes['/teamManage/teamList']" >
+                <el-menu-item index="/teamManage/teamList">
+                    <i class="fa fa-file-video-o" aria-hidden="true"></i> 小组管理
+                </el-menu-item>
+            </router-link> -->
+             <el-submenu index="小组管理" v-if="routes['/teamManage/teamList'] || routes['/teamManage/teammateList']"> 
+                <template slot="title">
+                    <i class="fa fa-object-group" aria-hidden="true"></i> 小组管理
+                </template>
+              
+                    <router-link  class="menu-indent" to="/teamManage/teamList" v-if="routes['/teamManage/teamList']">
+                        <el-menu-item index="/teamManage/teamList">
+                            <i class="fa fa-object-ungroup" aria-hidden="true"></i> 小组管理
+                        </el-menu-item>
+                    </router-link>
+                    <router-link  class="menu-indent" to="/teamManage/teammateList" v-if="routes['/teamManage/teammateList']">
+                        <el-menu-item index="/teamManage/teammateList">
+                           <i class="fa fa-object-ungroup" aria-hidden="true"></i> 组员管理
+                        </el-menu-item>
+                    </router-link>
+               
+            </el-submenu>
+            
             <!-- 二级菜单 示例-->
             <!-- <el-submenu index="错误页面" v-if="routes['/errorpage/401'] || routes['/errorpage/404']">
                 <template slot="title">
@@ -123,30 +139,6 @@
                     </router-link>
                
             </el-submenu>
-
-            <!-- <el-submenu index="小组管理"  > 
-                <template slot="title">
-                    <i class="fa fa-cogs fa-fw" aria-hidden="true"></i> 小组管理
-                </template>
-                    <router-link  class="menu-indent" to="/teamManage/teamList" >
-                        <el-menu-item index="/teamManage/teamList">
-                            小组列表
-                        </el-menu-item>
-                    </router-link>
-                    <router-link  class="menu-indent" to="/teamManage/teamAdd" >
-                        <el-menu-item index="/teamManage/teamAdd">
-                            小组添加
-                        </el-menu-item>
-                    </router-link>
-                    <router-link  class="menu-indent" to="/teamManage/teamUpdate" >
-                        <el-menu-item index="/teamManage/teamUpdate">
-                            小组修改
-                        </el-menu-item>
-                    </router-link>
-                    
-               
-            </el-submenu> -->
-
         </template>    
         
 
