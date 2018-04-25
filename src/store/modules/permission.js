@@ -17,9 +17,15 @@ const permission = {
     GenerateRoutes({ commit }, data) {
       console.log('路由入参：',data)
       return new Promise(resolve => {
-        
-        commit('SET_ROUTERS', data); 
+        // $each(data,function(index,value){
+        //      alert(value.permission);
+        // });
+        for(var p in data ){
+         var permission = data[p].permission;
+         commit('SET_ROUTERS', permission); 
 
+        }
+        
         resolve();
       })
     }

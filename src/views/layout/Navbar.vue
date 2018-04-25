@@ -10,7 +10,7 @@
             <screenfull class='screenfull'></screenfull>
             <el-dropdown class="avatar-container" trigger="click">
                 <div class="avatar-wrapper">
-                    <span class="user-name">{{userInfo.nickname}}</span>
+                    <span class="user-name">{{userInfo.nickName}}</span>
                     <img class="user-avatar" :src="userInfo.avatar+'?imageView2/1/w/80/h/80'">
                     <i class="el-icon-caret-bottom"></i>
                 </div>

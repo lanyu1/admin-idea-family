@@ -1,6 +1,6 @@
 // import { loginByEmail, logout, getInfo } from 'api/login';
 import Cookies from 'js-cookie';
-
+import axios from 'axios'
 import {global} from 'src/global/global';
 import {api} from 'src/global/api';
 // import store from '../../store';
@@ -42,18 +42,22 @@ const user = {
 
       //
       return new Promise((resolve, reject) => {
-        console.log('登录入参：',userInfo)
-        global.get( api.login,{params:userInfo}, function(res){
-            //登录接口，可只返回token 和 uid 。然后可根据uid 查询用户信息
-               console.log('-------获取到登录返回信息：',JSON.stringify(res) )
-               if(res.body.resultCode == 0){
-                    var res = res.body.data;
-
+        console.log('登录入参：',userInfo);
+        axios.post(api.login,JSON.stringify(userInfo),{
+          headers: {
+            'Content-Type': 'application/json;charset=UTF-8'
+          }
+        }).then(res=>{
+                   //登录接口，可只返回token 和 uid 。然后可根据uid 查询用户信息
+                    console.log('-------获取到登录返回信息：',res);
+               if(res.data.state== 200){
+                    var result = res.data.object;
+                     console.log(result); 
                     // 按一天8小时工作制设置过期时间
-                      Cookies.set('userToken', res.token,{ expires: 1/3}); //设置token
-                      Cookies.set('userId', res.uid,{ expires: 1/3}); //设置用户id，
-
-                      commit('SET_TOKEN', res.token);
+                      Cookies.set('userToken', result.userToken,{ expires: 1/3}); //设置token
+                      Cookies.set('userId', result.userId,{ expires: 1/3}); //设置用户id，
+               
+                      commit('SET_TOKEN', result.userToken);
                       //设置userInfo
                       //commit('SET_USERINFO', res); //此处也可省略，放在getUserInfo中统一处理
 
@@ -63,17 +67,11 @@ const user = {
                     //alert(res.body.resultMsg)
                     Message({
                         showClose: true,
-                        message: res.body.resultMsg,
+                        message: res.message,
                         type: 'error'
                     });
                }
-                
-        },function(res){
-            reject(res);
         })
-
-        return false;
-
       });
     },
 
@@ -82,19 +80,19 @@ const user = {
         return new Promise((resolve, reject) => {
             global.get( api.getUserInfo,{params:{'userId':state.uid}}, function(res){
                   console.log('-------根据id获取用户信息：',JSON.stringify(res) )
-                  if(res.body.resultCode == 0){
-                       var res = res.body.data;
+                  if(res.data.state== 200){
+                       var result = res.data.object;
                              
                              // Cookies.set('userToken', res.token); //Cookies.get('userId')
                              // Cookies.set('userId', res.uid); //Cookies.get('userId')
 
-                             commit('SET_TOKEN', res.token);
+                             commit('SET_TOKEN', result.userToken);
                              //设置userInfo
-                             commit('SET_USERINFO', res);
-
+                             commit('SET_USERINFO', result);
+  
                              //获取到信息时同时设置用户菜单权限
                              // store.dispatch('GenerateRoutes', res.permissions); 等同于
-                             dispatch('GenerateRoutes', res.permissions);
+                              dispatch('GenerateRoutes', result.permissions);
 
                              resolve();
                   }else{

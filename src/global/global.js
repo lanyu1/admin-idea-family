@@ -93,7 +93,7 @@ export  const global = {
             }, (response) => {
                 // 响应错误回调
                 //console.log('失败回调')
-                errorCb(response);
+                //errorCb(response);
                 if(isLoading){
                    loadingInstance.close();
                 }
@@ -133,7 +133,7 @@ export  const global = {
             }, (response) => {
                 // 响应错误回调
                 //console.log('失败回调')
-                errorCb(response);
+               // errorCb(response);
                 if(isLoading){
                    loadingInstance.close();
                 }

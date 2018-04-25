@@ -335,7 +335,7 @@ clickEditButton(){
          axios.get("http://localhost:9090/teammate/selectTeamList",{params:par}).then(result => {
         let res = result.data;
         console.log(res);
-        this.teamList = res.list;
+        this.teammateList = res.list;
         vm.listLoading=false;
       });
     },

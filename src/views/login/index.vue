@@ -47,13 +47,6 @@
             callback();
           }
         };
-        const validateAccount = (rule, value, callback) => {
-        if (value !== '1563274504@qq.com') {
-              callback(new Error('帐号不存在！'));
-            } else {
-              callback();
-            }
-        };
         const validatePass = (rule, value, callback) => {
           if (value.length < 6) {
             callback(new Error('密码不能小于6位'));
@@ -61,14 +54,6 @@
             callback();
           }
         };
-        const validatePass2 = (rule, value, callback) => {
-          if ( md5('@lss'+value) !== md5('@lss123456') ) {
-                callback(new Error('密码错误！'));
-          } else {
-                callback();
-          }
-        };
-
         return {
             loginForm: {
                 email: '1563274504@qq.com',
@@ -76,12 +61,10 @@
             },
             loginRules: {
                 email: [
-                    { required: true, trigger: 'blur', validator: validateEmail },
-                    {  trigger: 'blur' , validator: validateAccount}
+                    { required: true, trigger: 'blur', validator: validateEmail }
                 ],
                 password: [
-                    { required: true, trigger: 'blur', validator: validatePass },
-                    {  trigger: 'blur' , validator: validatePass2}
+                    { required: true, trigger: 'blur', validator: validatePass }
                 ]
             },
             loading: false,
@@ -96,23 +79,24 @@
       },
       methods: {
         handleLogin() {
-            
-            this.$refs.loginForm.validate(valid => {
+            this.$refs.loginForm.validate((valid) => {
                 if (valid) {
                   this.loading = true;
-                    var  par = JSON.parse(JSON.stringify(this.loginForm)) ;
-                         par.password = md5('@lss'+par.password);
-
+                    var  par = {
+                        email:this.loginForm.email,
+                        password:this.loginForm.password
+                    };
+                    //par.password = md5('@lss'+par.password);
                     this.$store.dispatch('LoginByEmail', par).then(() => {
                     this.loading = false;
                    
-                    console.log('登陆成功即将跳转--------')
+                    console.log('登陆成功即将跳转--------');
                     this.$router.push({ path: '/' });
                    
                         
                     // this.showDialog = true;
                   }).catch(err => {
-                    this.$message.error(err);
+                    this.$message.error("登陆失败");
                     this.loading = false;
                   });
                 } else {
