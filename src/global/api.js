@@ -23,7 +23,7 @@ export const api = {
 
             //'login':'http://localhost:80/dataJson/login.json',//ngxin
             'login':nodeApiBaseUrl+'/user/login',//登录接口
-            'getUserInfo':nodeApiBaseUrl+'/user/selectPermissionByUserId',//获取登录用户接口
+            'getUserInfo':url.staticPath+'/dataJson/userInfo.json',//获取登录用户接口
             'tableList':url.staticPath+'/dataJson/tableList.json',//表格模拟接口
             'getForm':url.staticPath+'/dataJson/form.json',//表单模拟接口
             "roleAndUser":url.staticPath+"/dataJson/roleAndUser.json",  //获取角色和对应用户  

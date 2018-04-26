@@ -4,7 +4,7 @@
 const permission = {
   state: {
     
-    routers:null
+    routers:[]
     
   },
   mutations: {
@@ -17,15 +17,9 @@ const permission = {
     GenerateRoutes({ commit }, data) {
       console.log('路由入参：',data)
       return new Promise(resolve => {
-        // $each(data,function(index,value){
-        //      alert(value.permission);
-        // });
-        for(var p in data ){
-         var permission = data[p].permission;
-         commit('SET_ROUTERS', permission); 
-
-        }
         
+        commit('SET_ROUTERS', data); 
+
         resolve();
       })
     }
