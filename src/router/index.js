@@ -36,6 +36,9 @@ const EventSearch = _import('event/eventSearch');
 const CommentList = _import('comment/commentList');
 
 // 消息管理
+const UserList = _import('user/userList');
+
+// 消息管理
 const NewsList = _import('news/newsList');
 
 /* 小组管理*/
@@ -155,6 +158,16 @@ const constantRouterMap = [
     // icon: '404',
     children: [
       { path: 'newsList', component: NewsList, name: '消息列表' },
+    ]
+  },
+  {
+    path: '/user',
+    component: Layout,
+    redirect: 'noredirect',
+    name: '用户管理',
+    // icon: '404',
+    children: [
+      { path: 'userList', component: UserList, name: '用户列表' },
     ]
   },
   {

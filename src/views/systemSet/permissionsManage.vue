@@ -29,7 +29,7 @@
           <el-table-column label="对应用户" width="">
             <template scope="scope">
                <template v-for="item in scope.row.userbaseinfoList">
-                    <span >{{ item.userName  }} &nbsp; &nbsp;</span>
+                    {{ item.userName  }} &nbsp; &nbsp;
                </template >
               
             </template>
@@ -88,7 +88,7 @@
            
 
            <!-- <el-checkbox-group v-model="smMenuBeanDtoList"> -->
-              <el-checkbox v-for="item in smMenuBeanDtoList" label="item.url" name="type" style="margin:0 15px 15px 0;"  v-model="item.set">{{ item.menuName }}</el-checkbox>
+              <el-checkbox v-for="item in smMenuBeanDtoList" :key="item.index" label="item.url" name="type" style="margin:0 15px 15px 0;"  v-model="item.set">{{ item.menuName }}</el-checkbox>
               
             <!-- </el-checkbox-group> -->
 

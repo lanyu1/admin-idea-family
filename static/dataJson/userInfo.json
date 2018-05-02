@@ -30,6 +30,7 @@
                 "/teamManage/teammateList":true,
                 "/teamManage/teamList":true,
                 "/news/newsList":true,
+                "/user/userList":true,
                 "/comment/commentList":true
         		
         	},

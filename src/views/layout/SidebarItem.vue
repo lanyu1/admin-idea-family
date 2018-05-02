@@ -25,11 +25,17 @@
                     <i class="fa fa-id-badge" aria-hidden="true"></i> 创意管理
                 </el-menu-item>
             </router-link>
+            <router-link  to="/user/userList"  v-if="routes['/user/userList']" >
+                <el-menu-item index="/user/userList">
+                    <i class="fa fa-users" aria-hidden="true"></i> 用户管理
+                </el-menu-item>
+            </router-link>
             <router-link  to="/comment/commentList"  v-if="routes['/comment/commentList']" >
                 <el-menu-item index="/comment/commentList">
                     <i class="fa fa-comments" aria-hidden="true"></i> 评论管理
                 </el-menu-item>
             </router-link>
+
               <router-link  to="/news/newsList"  v-if="routes['/news/newsList']" >
                 <el-menu-item index="/news/newsList">
                     <i class="fa fa-comment" aria-hidden="true"></i> 消息管理
@@ -146,28 +152,27 @@
 </template>
 
 <script>
-    //获取vuex中的菜单权限 进行菜单show展示。登陆成功时直接 返回菜单json 并包含帐户信息
-    export default {
-      name: 'SidebarItem',
-      props: {
-        routes: {
-          // type: Array
-        }
-      },
-
+//获取vuex中的菜单权限 进行菜单show展示。登陆成功时直接 返回菜单json 并包含帐户信息
+export default {
+  name: "SidebarItem",
+  props: {
+    routes: {
+      // type: Array
     }
+  }
+};
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-    .wscn-icon {
-        margin-right: 10px;
-    }
-    .fa{
-        margin-right: 10px;
-    }
-    .hideSidebar .menu-indent{
-        display: block;
-        text-indent: 10px;
-    }
+.wscn-icon {
+  margin-right: 10px;
+}
+.fa {
+  margin-right: 10px;
+}
+.hideSidebar .menu-indent {
+  display: block;
+  text-indent: 10px;
+}
 </style>
 
