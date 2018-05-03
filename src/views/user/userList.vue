@@ -49,7 +49,7 @@
               <span>{{scope.row.email}}</span>
             </template>
           </el-table-column>
-          <el-table-column label="头像"   align="center" prop="photoname">
+          <el-table-column label="头像"   align="center" prop="headPhoto">
             <template scope="scope">
             <img v-lazy="'/static/image/'+scope.row.headPhoto" style="width:80px;height:50px;">
               
@@ -87,33 +87,28 @@
       </el-pagination>
     </div>
     <!-- 新增弹窗 -->
-    <el-dialog title="新增创意" :visible.sync="dialogFormVisible">
+    <el-dialog title="新增用户" :visible.sync="dialogFormVisible">
           <el-form class="small-space" :model="temp" label-position="left" label-width="80px" style='width: 400px; margin-left:50px;'>
-            <el-form-item label="创意标题" required>
-              <el-input v-model="temp.title" style="width: 95%;"></el-input>
+            <el-form-item label="用户昵称" required>
+              <el-input v-model="temp.nikeName" style="width: 95%;"></el-input>
+            </el-form-item>
+           <el-form-item label="用户密码" required>
+              <el-input v-model="temp.password" style="width: 95%;" type="password"></el-input>
+            </el-form-item>
+            <el-form-item label="用户电话" required>
+              <el-input v-model="temp.phone" style="width: 95%;"></el-input>
+            </el-form-item>
+            <el-form-item label="用户邮箱" required>
+              <el-input v-model="temp.email" style="width: 95%;"></el-input>
             </el-form-item>
          <el-form-item label="区域选择" style="width: 100%;" required>
-                <el-select v-model="temp.city" placeholder="请选择区域"  style="width: 95%;">
+                <el-select v-model="temp.area" placeholder="请选择区域"  style="width: 95%;">
                   <el-option label="上海" value="北京"></el-option>
                   <el-option label="北京" value="上海"></el-option>
                   <el-option label="杭州" value="杭州"></el-option>
                 </el-select>
         </el-form-item>
-        <el-form-item label="创建时间" required>
-          <el-form-item >
-             <el-date-picker v-model="temp.createtime" type="date" placeholder="请选择日期" style="width: 95%;">
-    </el-date-picker>
-          </el-form-item>
-      </el-form-item>
-          <el-form-item label="类型" required style="width: 100%;">
-            <el-radio-group v-model="temp.type" placeholder="请选择类型"  style="width: 95%;">
-             <el-radio label="1">民宿</el-radio>
-             <el-radio label="2">餐饮</el-radio>
-             <el-radio label="3">农业</el-radio>
-             <el-radio label="4">休闲</el-radio>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item  label="图片上传" required>
+      <el-form-item  label="头像上传" required>
       <el-upload
         class="upload-demo"
         action="http://localhost:9090/upload/img"
@@ -125,8 +120,16 @@
       <el-button size="small" type="primary">点击上传</el-button>
 </el-upload>
       </el-form-item>
-            <el-form-item label="创意描述" required>
-               <el-input type="textarea" v-model="temp.instruction"  style="width: 95%;"></el-input>
+         <el-form-item label="特长" required style="width: 100%;">
+         <el-select v-model="temp.specialty" placeholder="请选择类型"  style="width: 95%;">
+                  <el-option label="看书" value="看书"></el-option>
+                  <el-option label="打球" value="打球"></el-option>
+                  <el-option label="听音乐" value="听音乐"></el-option>
+                  <el-option label="跑步" value="跑步"></el-option>
+                </el-select>
+      </el-form-item>
+            <el-form-item label="描述" required>
+               <el-input type="textarea" v-model="temp.description"  style="width: 95%;"></el-input>
             </el-form-item>
           </el-form>
 
@@ -137,32 +140,28 @@
           </div>
     </el-dialog>
      <!-- 编辑弹窗 -->
-    <el-dialog title="编辑创意" :visible.sync="dialogFormEdit">
-          <el-form class="small-space" :model="temp" label-position="left" label-width="80px" style='width: 400px; margin-left:50px;'>
-            <el-form-item label="创意标题" required>
-              <el-input v-model="temp.title" style="width: 95%;"></el-input>
+    <el-dialog title="编辑" :visible.sync="dialogFormEdit">
+         <el-form class="small-space" :model="temp" label-position="left" label-width="80px" style='width: 400px; margin-left:50px;'>
+            <el-form-item label="用户昵称" required>
+              <el-input v-model="temp.nikeName" style="width: 95%;"></el-input>
+            </el-form-item>
+           <el-form-item label="用户密码" required>
+              <el-input v-model="temp.password" style="width: 95%;" type="password"></el-input>
+            </el-form-item>
+            <el-form-item label="用户电话" required>
+              <el-input v-model="temp.phone" style="width: 95%;"></el-input>
+            </el-form-item>
+            <el-form-item label="用户邮箱" required>
+              <el-input v-model="temp.email" style="width: 95%;"></el-input>
             </el-form-item>
          <el-form-item label="区域选择" style="width: 100%;" required>
-                <el-select v-model="temp.city" placeholder="请选择区域"  style="width: 95%;">
+                <el-select v-model="temp.area" placeholder="请选择区域"  style="width: 95%;">
                   <el-option label="上海" value="北京"></el-option>
                   <el-option label="北京" value="上海"></el-option>
                   <el-option label="杭州" value="杭州"></el-option>
                 </el-select>
         </el-form-item>
-        <el-form-item label="创建时间" required>
-          <el-form-item >
-            <el-date-picker type="date" placeholder="请选择日期" v-model="temp.createtime" style="width: 95%;"></el-date-picker>
-          </el-form-item>
-      </el-form-item>
-           <el-form-item label="类型" required style="width: 100%;">
-         <el-select v-model="temp.typecontent" placeholder="请选择类型"  style="width: 95%;">
-                  <el-option label="民宿" value="民宿"></el-option>
-                  <el-option label="餐饮" value="餐饮"></el-option>
-                  <el-option label="农业" value="农业"></el-option>
-                  <el-option label="休闲" value="休闲"></el-option>
-                </el-select>
-      </el-form-item>
-      <el-form-item label="图片" required>
+      <el-form-item  label="头像上传" required>
       <el-upload
         class="upload-demo"
         action="http://localhost:9090/upload/img"
@@ -170,12 +169,20 @@
         :on-success="successHandle"
         :on-remove="handleRemove"
         :file-list="fileList"
-        list-type="picture" style="width: 95%;">
-      <el-button size="small" type="primary">修改图片</el-button>
+        list-type="picture">
+      <el-button size="small" type="primary">点击上传</el-button>
 </el-upload>
       </el-form-item>
-            <el-form-item label="创意描述" required>
-               <el-input type="textarea" v-model="temp.instruction"  style="width: 95%;"></el-input>
+         <el-form-item label="特长" required style="width: 100%;">
+         <el-select v-model="temp.specialty" placeholder="请选择类型"  style="width: 95%;">
+                  <el-option label="看书" value="看书"></el-option>
+                  <el-option label="打球" value="打球"></el-option>
+                  <el-option label="听音乐" value="听音乐"></el-option>
+                  <el-option label="跑步" value="跑步"></el-option>
+                </el-select>
+      </el-form-item>
+            <el-form-item label="描述" required>
+               <el-input type="textarea" v-model="temp.description"  style="width: 95%;"></el-input>
             </el-form-item>
           </el-form>
 
@@ -217,23 +224,16 @@ export default {
         },
         temp: {
           "id":"",
-          "founderid":"",
-          "title": "",
-          "city": "",
-          "createtime": "",
-          "type":'',
-          "typecontent": "",
-          "photoname":"",
-          "instruction": "",
+          "nikeName":"",
+          "email": "",
+          "phone": "",
+          "password":"",
+          "specialty": "",
+          "area":'',
+          "headPhoto":"",
+          "description": "",
           "orderNum": 10
         },
-        typeOptions:[
-          { key: '民宿', display_name: '民宿' },
-          { key: '餐饮', display_name: '餐饮' },
-          { key: '农业', display_name: '农业' },
-           { key: '休闲', display_name: '休闲' }
-         
-        ],
         dialogFormVisible: false,
         dialogFormEdit:false,
         multipleSelection: []
@@ -250,15 +250,15 @@ export default {
       let vm = this;
 
       vm.temp = {
-        "id":"",
-        "founderid":"",
-          "title": "",
-          "city": "",
-          "createtime": "",
-          "type":'',
-          "typecontent": "",
-           "photoname":"",
-          "instruction": "",
+           "id":"",
+          "nikeName":"",
+          "email": "",
+          "phone": "",
+          "password":"",
+          "specialty": "",
+          "area":'',
+          "headPhoto":"",
+          "description": "",
           "orderNum": 10
       }
     },
@@ -286,17 +286,21 @@ export default {
       if(this.multipleSelection.length==1){
          this.dialogFormEdit = true;
          this.fileList=[{
-           name:this.multipleSelection[0].photoname,
+           name:this.multipleSelection[0].headPhoto,
            url:'localhost:2018/'
          }]
 
-         vm.temp.typecontent = this.multipleSelection[0].eventType.typecontent;
+        // vm.temp.typecontent = this.multipleSelection[0].eventType.typecontent;
          //vm.temp.type = this.multipleSelection[0].type;
-         vm.temp.founderid = this.multipleSelection[0].founderid;
-         vm.temp.title = this.multipleSelection[0].title;
-         vm.temp.city = this.multipleSelection[0].city;
-         vm.temp.createtime = this.multipleSelection[0].createtime;
-         vm.temp.instruction = this.multipleSelection[0].instruction;
+         //vm.temp.founderid = this.multipleSelection[0].founderid;
+         vm.temp.nikeName = this.multipleSelection[0].nikeName;
+         vm.temp.area = this.multipleSelection[0].area;
+         vm.temp.email = this.multipleSelection[0].email;
+         vm.temp.password = this.multipleSelection[0].password;
+         vm.temp.headPhoto = this.multipleSelection[0].headPhoto;
+          vm.temp.phone = this.multipleSelection[0].phone;
+          vm.temp.specialty =this.multipleSelection[0].specialty;
+         vm.temp.description = this.multipleSelection[0].description;
          vm.temp.id = this.multipleSelection[0].id;
       }else if(this.multipleSelection.length>1){
         vm.$message({
@@ -316,14 +320,16 @@ export default {
     handleEditSubmit(){
         let vm = this;
         console.log('编辑修改后的数据',vm.temp);
-        axios.put('http://localhost:9090/event/updateEvent',{ 
+        axios.put('http://localhost:9090/user/updateUser',{ 
           id:vm.temp.id,
-          founderid:vm.temp.founderid,
-          title:vm.temp.title,
-          city:vm.temp.city,
-          photoname:this.fileName,
-          createtime:vm.temp.createtime,
-          instruction:vm.temp.instruction
+          nikeName:vm.temp.nikeName,
+          area:vm.temp.area,
+          email:vm.temp.email,
+          headPhoto:this.fileName,
+          password:vm.temp.password,
+          phone:vm.temp.phone,
+          description:vm.temp.description,
+          specialty:vm.temp.specialty
         },{
           headers: {
             'Content-Type': 'application/json;charset=UTF-8'
@@ -346,14 +352,14 @@ export default {
         let vm = this;
       if(this.multipleSelection.length==1){
         var param={
-          eid :vm.multipleSelection[0].id
+          id :vm.multipleSelection[0].id
         }
          this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
             type: 'warning'
         }).then(() => {
-           axios.delete("http://localhost:9090/event/deleteEvent",{params:param}).then(result =>{
+           axios.delete("http://localhost:9090/user/deleteUser",{params:param}).then(result =>{
              this.$message({
                 type: 'success',
                 message: '删除成功!'
@@ -434,11 +440,10 @@ export default {
     handleCreateSubmit(){
         console.log(this.fileName);
         let vm = this;
-        vm.temp.photoname=this.fileName;
-        console.log('新增入参：',vm.temp)
-        vm.temp.founderid = 1;
+        vm.temp.headPhoto=this.fileName;
+        console.log('新增入参：',vm.temp);
            //新增接口
-           axios.post('http://localhost:9090/event/addEvent',JSON.stringify(vm.temp),{
+           axios.post('http://localhost:9090/user/addUser',JSON.stringify(vm.temp),{
            headers: {
                         'Content-Type': 'application/json;charset=UTF-8'
                     }

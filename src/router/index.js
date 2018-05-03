@@ -35,11 +35,11 @@ const EventSearch = _import('event/eventSearch');
 // 评论管理
 const CommentList = _import('comment/commentList');
 
-// 消息管理
+// 用户管理
 const UserList = _import('user/userList');
 
-// 消息管理
-const NewsList = _import('news/newsList');
+// 公告管理
+const NoticeList = _import('notice/noticeList');
 
 /* 小组管理*/
 const TeamList = _import('team/teamList');
@@ -151,13 +151,13 @@ const constantRouterMap = [
     ]
   },
   {
-    path: '/news',
+    path: '/notice',
     component: Layout,
     redirect: 'noredirect',
-    name: '消息管理',
+    name: '公告管理',
     // icon: '404',
     children: [
-      { path: 'newsList', component: NewsList, name: '消息列表' },
+      { path: 'noticeList', component: NoticeList, name: '公告列表' },
     ]
   },
   {

@@ -29,7 +29,7 @@
                 "/systemSet/loginLog":true,
                 "/teamManage/teammateList":true,
                 "/teamManage/teamList":true,
-                "/news/newsList":true,
+                "/notice/noticeList":true,
                 "/user/userList":true,
                 "/comment/commentList":true
         		

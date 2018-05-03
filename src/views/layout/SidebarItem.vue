@@ -22,7 +22,7 @@
 
             <router-link  to="/event/eventList"  v-if="routes['/event/eventList']" >
                 <el-menu-item index="/event/eventList">
-                    <i class="fa fa-id-badge" aria-hidden="true"></i> 创意管理
+                    <i class="fa fa-id-card" aria-hidden="true"></i> 创意管理
                 </el-menu-item>
             </router-link>
             <router-link  to="/user/userList"  v-if="routes['/user/userList']" >
@@ -36,9 +36,9 @@
                 </el-menu-item>
             </router-link>
 
-              <router-link  to="/news/newsList"  v-if="routes['/news/newsList']" >
-                <el-menu-item index="/news/newsList">
-                    <i class="fa fa-comment" aria-hidden="true"></i> 消息管理
+              <router-link  to="/notice/noticeList"  v-if="routes['/notice/noticeList']" >
+                <el-menu-item index="/notice/noticeList">
+                    <i class="fa fa-comment" aria-hidden="true"></i> 公告管理
                 </el-menu-item>
             </router-link>
             <!-- <router-link  to="/teamManage/teamList"  v-if="routes['/teamManage/teamList']" >

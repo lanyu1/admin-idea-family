@@ -35,19 +35,19 @@
 
           <el-table-column label="小组名" width="" align="center" >
             <template scope="scope">
-              {{scope.row.teamname}}
+              {{scope.row.teamName}}
             </template>
           </el-table-column>
 
           <el-table-column label="创建者" width="" align="center" >
             <template scope="scope">
-              {{scope.row.users.nikeName}}
+              {{scope.row.nike_name}}
             </template>
           </el-table-column>
 
           <el-table-column label="小组头像"  align="center" width="" >
             <template scope="scope">
-              <img v-lazy="'/static/image/'+scope.row.photoname" style="width:80px;height:50px;">        
+              <img v-lazy="'/static/image/'+scope.row.photoName" style="width:80px;height:50px;">        
             </template>
           </el-table-column>
 
@@ -60,7 +60,7 @@
             <el-table-column align="center"  label="创建时间" >
                 <template scope="scope">
                    <i class="el-icon-time"></i>
-                  <span>{{scope.row.createtime}}</span>
+                  <span>{{getFormatDate(scope.row.createTime)}}</span>
                 </template>
             </el-table-column>
 
@@ -192,10 +192,11 @@ export default {
          temp:{
          "id":"",
          "founderid":"",
-          "teamname": "",
-          "createtime": "",
+         "nike_name":"",
+          "teamName": "",
+          "createTime": "",
           "notice": "",
-           "photoname":"",
+           "photoName":"",
           "description": "",
           "orderNum": 10
       },
@@ -223,12 +224,13 @@ export default {
       let vm = this;
 
       vm.temp = {
-          "id":"",
-          "founderid":"",
-          "teamname": "",
-          "createtime": "",
+         "id":"",
+         "founderid":"",
+         "nike_name":"",
+          "teamName": "",
+          "createTime": "",
           "notice": "",
-          "photoname":"",
+           "photoName":"",
           "description": "",
           "orderNum": 10
       }
@@ -245,6 +247,7 @@ export default {
    let vm = this;
           vm.listLoading = true;
            let par = {
+             "searchContent":"",
               "pageSize":vm.listQuery.pageSize,
               "page":vm.listQuery.currPage,
             };
@@ -252,6 +255,7 @@ export default {
         let res = result.data;
         console.log(res);
         this.teamList = res.list;
+        console.log(this.teamList);
         vm.listLoading=false;
       });
     },
@@ -267,8 +271,8 @@ clickEditButton(){
          }];
          //vm.temp.type = this.multipleSelection[0].type;
          vm.temp.founderid = this.multipleSelection[0].founderid;
-         vm.temp.teamname = this.multipleSelection[0].teamname;
-         vm.temp.createtime = this.multipleSelection[0].createtime;
+         vm.temp.teamname = this.multipleSelection[0].teamName;
+         vm.temp.createTime = this.multipleSelection[0].createTime;
           vm.temp.notice = this.multipleSelection[0].notice;
          vm.temp.description = this.multipleSelection[0].description;
          vm.temp.id = this.multipleSelection[0].id;
@@ -408,7 +412,7 @@ clickEditButton(){
     handleCreateSubmit(){
         console.log(this.fileName);
         let vm = this;
-        vm.temp.photoname=this.fileName;
+        vm.temp.photoName=this.fileName;
         console.log('新增入参：',vm.temp)
            //新增接口
            axios.post('http://localhost:9090/team/addTeam',JSON.stringify(vm.temp),{
@@ -444,6 +448,25 @@ clickEditButton(){
     },
     formatJson(filterVal, jsonData) {
       return jsonData.map(v => filterVal.map(j => v[j]))
+    },
+        getFormatDate(timeStr, dateSeparator, timeSeparator) {
+      dateSeparator = dateSeparator ? dateSeparator : "-";
+      timeSeparator = timeSeparator ? timeSeparator : ":";
+      var date = new Date(timeStr),
+        year = date.getFullYear(), // 获取完整的年份(4位,1970)
+        month = date.getMonth(), // 获取月份(0-11,0代表1月,用的时候记得加上1)
+        day = date.getDate(), // 获取日(1-31)
+        hour = date.getHours(), // 获取小时数(0-23)
+        minute = date.getMinutes(), // 获取分钟数(0-59)
+        seconds = date.getSeconds(), // 获取秒数(0-59)
+        Y = year + dateSeparator,
+        M = (month + 1 > 9 ? month + 1 : "0" + (month + 1)) + dateSeparator,
+        D = (day > 9 ? day : "0" + day) + " ",
+        h = (hour > 9 ? hour : "0" + hour) + timeSeparator,
+        m = (minute > 9 ? minute : "0" + minute) + timeSeparator,
+        s = seconds > 9 ? seconds : "0" + seconds,
+        formatDate = Y + M + D + h + m + s;
+      return formatDate;
     }
   }
 };
