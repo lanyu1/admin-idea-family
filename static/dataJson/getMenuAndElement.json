@@ -82,8 +82,30 @@
             "set": true
           },{
             "id": "10009",
-            "menuName": "消息管理",
-            "url": "/news/newsList",
+            "menuName": "日程管理",
+            "url": "/schedule/scheduleList",
+            "icon": "fa-clock-o",
+            "remark": null,
+            "seqno": 20,
+            "parentId": null,
+            "type": 252690,
+            "set": true
+          },
+          {
+            "id": "10010",
+            "menuName": "消息回复管理",
+            "url": "/reply/replyList",
+            "icon": "fa-clock-o",
+            "remark": null,
+            "seqno": 20,
+            "parentId": null,
+            "type": 252690,
+            "set": true
+          },
+          {
+            "id": "10011",
+            "menuName": "问题墙管理",
+            "url": "/question/questionList",
             "icon": "fa-clock-o",
             "remark": null,
             "seqno": 20,

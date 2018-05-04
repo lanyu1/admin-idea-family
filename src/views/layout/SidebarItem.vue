@@ -17,9 +17,6 @@
             
                 </el-menu-item>
             </router-link>
-
-            
-
             <router-link  to="/event/eventList"  v-if="routes['/event/eventList']" >
                 <el-menu-item index="/event/eventList">
                     <i class="fa fa-id-card" aria-hidden="true"></i> 创意管理
@@ -35,17 +32,21 @@
                     <i class="fa fa-comments" aria-hidden="true"></i> 评论管理
                 </el-menu-item>
             </router-link>
-
-              <router-link  to="/notice/noticeList"  v-if="routes['/notice/noticeList']" >
-                <el-menu-item index="/notice/noticeList">
-                    <i class="fa fa-comment" aria-hidden="true"></i> 公告管理
+              <router-link  to="/schedule/scheduleList"  v-if="routes['/schedule/scheduleList']" >
+                <el-menu-item index="/schedule/scheduleList">
+                    <i class="fa fa-calendar" aria-hidden="true"></i> 日程管理
                 </el-menu-item>
             </router-link>
-            <!-- <router-link  to="/teamManage/teamList"  v-if="routes['/teamManage/teamList']" >
-                <el-menu-item index="/teamManage/teamList">
-                    <i class="fa fa-file-video-o" aria-hidden="true"></i> 小组管理
+            <router-link  to="/question/questionList"  v-if="routes['/question/questionList']" >
+                <el-menu-item index="/question/questionList">
+                    <i class="fa fa-question-circle" aria-hidden="true"></i> 问题墙管理
                 </el-menu-item>
-            </router-link> -->
+            </router-link>
+             <router-link  to="/reply/replyList"  v-if="routes['/reply/replyList']" >
+                <el-menu-item index="/reply/replyList">
+                    <i class="fa fa-comment" aria-hidden="true"></i> 消息回复管理
+                </el-menu-item>
+            </router-link>
              <el-submenu index="小组管理" v-if="routes['/teamManage/teamList'] || routes['/teamManage/teammateList']"> 
                 <template slot="title">
                     <i class="fa fa-object-group" aria-hidden="true"></i> 小组管理
@@ -61,7 +62,6 @@
                            <i class="fa fa-object-ungroup" aria-hidden="true"></i> 组员管理
                         </el-menu-item>
                     </router-link>
-               
             </el-submenu>
             
             <!-- 二级菜单 示例-->

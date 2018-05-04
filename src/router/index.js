@@ -38,8 +38,14 @@ const CommentList = _import('comment/commentList');
 // 用户管理
 const UserList = _import('user/userList');
 
-// 公告管理
-const NoticeList = _import('notice/noticeList');
+// 日程管理
+const ScheduleList = _import('schedule/scheduleList');
+
+// 消息回复管理
+const ReplyList = _import('reply/replyList');
+
+// 问题墙管理
+const QuestionList = _import('question/questionList');
 
 /* 小组管理*/
 const TeamList = _import('team/teamList');
@@ -151,13 +157,33 @@ const constantRouterMap = [
     ]
   },
   {
-    path: '/notice',
+    path: '/schedule',
     component: Layout,
     redirect: 'noredirect',
-    name: '公告管理',
+    name: '日程管理',
     // icon: '404',
     children: [
-      { path: 'noticeList', component: NoticeList, name: '公告列表' },
+      { path: 'scheduleList', component: ScheduleList, name: '日程列表' },
+    ]
+  },
+  {
+    path: '/reply',
+    component: Layout,
+    redirect: 'noredirect',
+    name: '消息回复管理',
+    // icon: '404',
+    children: [
+      { path: 'replyList', component: ReplyList, name: '消息回复列表' },
+    ]
+  },
+  {
+    path: '/question',
+    component: Layout,
+    redirect: 'noredirect',
+    name: '日程管理',
+    // icon: '404',
+    children: [
+      { path: 'questionList', component: QuestionList, name: '日程列表' },
     ]
   },
   {

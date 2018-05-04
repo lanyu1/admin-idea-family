@@ -29,8 +29,10 @@
                 "/systemSet/loginLog":true,
                 "/teamManage/teammateList":true,
                 "/teamManage/teamList":true,
-                "/notice/noticeList":true,
+                "/schedule/scheduleList":true,
                 "/user/userList":true,
+                "/reply/replyList":true,
+                "/question/questionList":true,
                 "/comment/commentList":true
         		
         	},
